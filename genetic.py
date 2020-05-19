@@ -196,12 +196,12 @@ def main():
     mu_press = 0.4
     semilla = [1,2,3,4,5,6,7,8,9,10]
     dataset_name = sys.argv[1] # an input parameter between [1-5] which indicate the random partition 
-    test = np.str(np.int(sys.argv[2]) + 4)
+    opt = np.str(np.int(sys.argv[2]) + 4)
     validation = np.str(np.int(sys.argv[2]) + 9)
     
-    C_test = pd.read_csv('./predictions/'+dataset_name+'/'+test+ '.csv')
-    l_test = C_test.real
-    C_test = C_test.drop(['real', 'Unnamed: 0'], axis = 1)
+    C_opt = pd.read_csv('./predictions/'+dataset_name+'/'+opt+ '.csv')
+    l_opt = C_opt.real
+    C_opt = C_opt.drop(['real', 'Unnamed: 0'], axis = 1)
 
     C_validation = pd.read_csv('./predictions/'+dataset_name+'/'+validation+ '.csv')
     l_validation = C_validation.real
@@ -211,7 +211,7 @@ def main():
     MZE = []
     for s in semilla:
         print("Semilla", s)
-        best_cromosome = genetic_algorithm(N, t, s, C_test, l_test, G, sel_press, mu_press)
+        best_cromosome = genetic_algorithm(N, t, s, C_opt, l_opt, G, sel_press, mu_press)
         print("Best cromosome" , best_cromosome)   
         #Validation
         y_true = l_validation.tolist()
@@ -220,12 +220,10 @@ def main():
         MAE.append(mae)
         MZE.append(mze)
 
-    print('index_test:', test)
-    print('index_validation:', validation)
     print("MAE mean:    ", np.mean(MAE))
-    print("MAE std:    ", np.std(MAE))
+
     print("MZE mean:    ", np.mean(MZE))
-    print("MZE std:    ", np.std(MZE))
+
         
                              
                              
